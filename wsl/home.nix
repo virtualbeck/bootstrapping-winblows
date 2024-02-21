@@ -7,6 +7,7 @@
 }: let
   unstable-packages = with pkgs.unstable; [
     bat
+    bash
     bottom
     coreutils
     curl
@@ -28,7 +29,6 @@
     tmux
     tree
     unzip
-    vim
     wget
     zip
   ];
@@ -39,16 +39,11 @@
     
     # key tools
     gh
-    just
     awscli2
     ssm-session-manager-plugin
-    taskwarrior
-    gopass
-    csvq
-    restic
+    go-2fa
     pipx
     pwgen
-    chezmoi
     terraform-docs
     packer
     rclone
@@ -57,30 +52,16 @@
     pre-commit
     tfswitch
     gnumake
-    
-    # core languages
-    rustup
-    go
-    lua
-    nodejs
-    python3
-    typescript
+    xclip
 
-    # rust stuff
-    cargo-cache
-    cargo-expand
+    # core languages
+    go
+    python3
 
     # local dev stuf
-    mkcert
-    httpie
-    ran
     rsync
     unzip
     jq
-    yq
-    grex
-    gron
-    watchexec
 
     # language servers
     ccls # c / c++
@@ -120,8 +101,8 @@ in {
     username = "${username}";
     homeDirectory = "/home/${username}";
 
-    sessionVariables.EDITOR = "lvim";
-    sessionVariables.SHELL = "/etc/profiles/per-user/${username}/bin/zsh";
+    sessionVariables.EDITOR = "nano";
+    sessionVariables.SHELL = "/etc/profiles/per-user/${username}/bin/bash";
   };
 
   home.packages =
@@ -139,62 +120,16 @@ in {
     Downloads.target = "workspaces";
   };
 
+  programs.bash = {
+    enable = true;
+    bashrcExtra = builtins.readFile ./bashrc;
+  };
+
   programs = {
     home-manager.enable = true;
     nix-index.enable = true;
-    nix-index.enableZshIntegration = true;
     nix-index-database.comma.enable = true;
-
-    fzf.enable = true;
-    fzf.enableZshIntegration = true;
-    lsd.enable = true;
-    lsd.enableAliases = true;
-    zoxide.enable = true;
-    zoxide.enableZshIntegration = true;
-    broot.enable = true;
-    broot.enableZshIntegration = true;
-
     direnv.enable = true;
-    direnv.enableZshIntegration = true;
     direnv.nix-direnv.enable = true;
-
-    zsh = {
-      enable = true;
-      autocd = true;
-      enableAutosuggestions = true;
-      enableCompletion = true;
-      defaultKeymap = "emacs";
-      history.size = 10000;
-      history.save = 10000;
-      history.expireDuplicatesFirst = true;
-      history.ignoreDups = true;
-      history.ignoreSpace = true;
-      historySubstringSearch.enable = true;
-
-      shellAliases = {
-        gc = "nix-collect-garbage --delete-old";
-        show_path = "echo $PATH | tr ':' '\n'";
-
-        pbcopy = "/mnt/c/Windows/System32/clip.exe";
-        pbpaste = "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -command 'Get-Clipboard'";
-        explorer = "/mnt/c/Windows/explorer.exe";
-      };
-
-      envExtra = ''
-        export PATH=$PATH:$HOME/.local/bin
-      '';
-
-      initExtra = ''
-        # fixes duplication of commands when using tab-completion
-        export LANG=C.UTF-8
-
-        autoload -U +X compinit && compinit
-        autoload -U +X bashcompinit && bashcompinit
-
-        for f in $(find ~/.bashrc.d -type f | sort -r ); do
-            source $f || echo "[$f] could not load - exit code $?"
-        done
-      '';
-    };
   };
 }
