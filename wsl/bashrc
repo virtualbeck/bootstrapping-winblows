@@ -31,7 +31,6 @@ function 256_unexport {
     unset AWS_EXECUTION_ENV="APN/1.0 HashiCorp/1.0 Terraform/1.5.5 aws-sdk-go/1.44.256 (go1.20.7; linux; amd64)" 
 }
 
-alias pull_requests='xdg-open https://bitbucket.org/figg/$(basename $(pwd))/pull-requests/'
 alias rando="cat /dev/urandom | tr -dc 'a-zA-Z0-9*!' | fold -w 18 | head -1"
 alias pgadmin3='docker run --rm -v /tmp/.X11-unix:/tmp/.X11-unix --dns 10.100.0.2 -e DISPLAY=unix$DISPLAY -v $HOME:/home/mdouchement mdouchement/pgadmin3'
 alias space='echo "sudo du -sh * | sort -hr | head -n10"'
@@ -44,10 +43,6 @@ alias undiff='fgrep -x -v -f' #Find the contents of file2 that are not present i
 # ^^^ see https://www.technlg.net/linux/fgrep-files/ for more context ^^^
 alias ssh='ssh -o IdentitiesOnly=true'
 
-# function awssso-populate-profiles {
-#   aws-sso-util configure populate -u https://gofigg.awsapps.com/start --sso-region us-east-1 --region us-east-1 -c output=json --no-credential-process
-# }
-
 function awssso-export {
   eval $(aws-export-credentials --env-export)
 }
@@ -56,16 +51,6 @@ function awssso-unexport {
   unset AWS_ACCESS_KEY_ID
   unset AWS_SECRET_ACCESS_KEY
   unset AWS_SESSION_TOKEN
-}
-
-function knife_help {
-  echo "#############################################################################"
-  echo "cd /etc/cinc"
-  echo "Cookbook upload:    knife cookbook upload edo-filetransfer"
-  echo "Databag etl client: knife data bag from file etl_clients ~/figg/edo-chef/data_bags/etl_clients/jpmc.json"
-  echo "Databag parameter:  knife data bag from file parameters ~/figg/edo-chef/data_bags/parameters/hornetq.json"
-  echo "Environment file:   knife environment from file ~/figg/edo-chef/environments/uat.json"
-  echo "#############################################################################"
 }
 
 function git_flatten {
@@ -233,8 +218,9 @@ awssso-logout() {
 }
 
 function figg_clone() {
-  cd ~/figg/
+  cd ~/workspaces/figg/
   git clone git@bitbucket.org:figg/$1.git
+  cd $1
 }
 
 #========================================
