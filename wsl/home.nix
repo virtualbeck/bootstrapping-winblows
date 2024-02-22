@@ -7,7 +7,7 @@
 }: let
   unstable-packages = with pkgs.unstable; [
     bat
-    bash
+    bashInteractive
     bottom
     coreutils
     curl
@@ -53,6 +53,8 @@
     tfswitch
     gnumake
     xclip
+    nixpkgs-fmt
+    nil
 
     # core languages
     go
