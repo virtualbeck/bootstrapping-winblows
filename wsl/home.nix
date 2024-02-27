@@ -5,7 +5,11 @@
   nix-index-database,
   ...
 }: let
-  unstable-packages = with pkgs.unstable; [
+  stable-packages = with pkgs; [
+    # daemons
+    openvscode-server
+    
+    # key tools
     bat
     bashInteractive
     bottom
@@ -31,13 +35,6 @@
     unzip
     wget
     zip
-  ];
-
-  stable-packages = with pkgs; [
-    # daemons
-    openvscode-server
-    
-    # key tools
     gh
     awscli2
     ssm-session-manager-plugin
@@ -109,12 +106,10 @@ in {
 
   home.packages =
     stable-packages
-    ++ unstable-packages
     ++
     # FIXME: you can add anything else that doesn't fit into the above two lists in here
     [
-      # pkgs.some-package
-      # pkgs.unstable.some-other-package
+      (pkgs.callPackage ../github_binaries/ecs.nix { })
     ];
 
   home.file = {
