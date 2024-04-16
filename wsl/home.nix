@@ -52,7 +52,8 @@
     xclip
     nixpkgs-fmt
     nil
-
+    meld
+    
     # core languages
     go
     python3
