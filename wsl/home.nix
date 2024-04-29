@@ -6,11 +6,9 @@
   ...
 }: let
   stable-packages = with pkgs; [
-    # daemons
     # key tools
     bat
     bashInteractive
-    bottom
     coreutils
     curl
     du-dust
@@ -21,14 +19,8 @@
     git-crypt
     htop
     killall
-    lunarvim
-    mosh
-    mlocate
-    neovim
-    procs
     ripgrep
     sd
-    tmux
     tree
     unzip
     wget
@@ -39,7 +31,6 @@
     go-2fa
     pipx
     pwgen
-    terraform-docs
     packer
     rclone
     drone-cli
@@ -51,6 +42,7 @@
     nixpkgs-fmt
     nil
     meld
+    fastfetch
     
     # core languages
     go
