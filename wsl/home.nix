@@ -92,7 +92,7 @@ in {
     nix-index-database.hmModules.nix-index
   ];
 
-  home.stateVersion = "22.11";
+  home.stateVersion = "22.11"; # no touching (https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion)
 
   home = {
     username = "${username}";

@@ -36,7 +36,7 @@
     ];
   };
 
-  system.stateVersion = "22.05";
+  system.stateVersion = "22.05"; # no touching (https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion)
 
   wsl = {
     enable = true;
