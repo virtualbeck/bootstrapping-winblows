@@ -7,8 +7,6 @@
 }: let
   stable-packages = with pkgs; [
     # daemons
-    openvscode-server
-    
     # key tools
     bat
     bashInteractive

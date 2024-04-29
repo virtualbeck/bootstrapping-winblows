@@ -17,14 +17,9 @@ $env:Path += ";C:\ProgramData\chocolatey\bin"
 choco install -y `
   7zip `
   barrier `
-  chocolateygui `
   citrix-workspace `
   git `
   googlechrome `
   nano  `
-  notepadplusplus `
-  powertoys `
   slack `
-  tabby `
-  zoom `
-  openvpn
+  zoom
