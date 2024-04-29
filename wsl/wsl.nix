@@ -56,25 +56,6 @@
     autoPrune.enable = true;
   };
 
-  # systemd.user = {
-  #   services.locate = {
-  #     enable = true;
-  #     locate = pkgs.mlocate;
-  #     interval = "hourly";
-  #   };
-  # };
-
-  systemd.services.openvscode-server = {
-    enable = true;
-    description = "Open VSCode Server";
-    serviceConfig = {
-      ExecStart = "${pkgs.openvscode-server}/bin/openvscode-server --accept-server-license-terms --without-connection-token --port=3000";
-      Restart="always";
-      User = username;
-    };
-    wantedBy = [ "multi-user.target" ];
-  };
-
   nix = {
     settings = {
       trusted-users = [username];
