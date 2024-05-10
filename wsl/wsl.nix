@@ -4,7 +4,11 @@
   pkgs,
   inputs,
   ...
-}: {
+}: 
+let
+  code-server = (pkgs.callPackage ../github_binaries/code-server.nix { });
+in
+{
   time.timeZone = "America/Chicago";
 
   networking.hostName = "${hostname}";
@@ -28,6 +32,7 @@
 
   environment.systemPackages = [
     (import ./win32yank.nix {inherit pkgs;})
+    code-server
   ];
 
   home-manager.users.${username} = {
@@ -54,6 +59,17 @@
     enable = true;
     enableOnBoot = true;
     autoPrune.enable = true;
+  };
+
+  systemd.services.code-server = {
+    enable = true;
+    description = "VS Code in the browser";
+    serviceConfig = {
+      ExecStart = "${code-server}/bin/code-server . --bind-addr=0.0.0.0:3000 --auth=none --user-data-dir /home/${username}/.config/Code --extensions-dir /home/${username}/.vscode/extensions";
+      Restart = "always";
+      User = username;
+    };
+    wantedBy = [ "multi-user.target" ];
   };
 
   nix = {

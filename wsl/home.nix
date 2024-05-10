@@ -3,6 +3,7 @@
   pkgs,
   username,
   nix-index-database,
+  nix-vscode-extensions,
   ...
 }: let
   stable-packages = with pkgs; [
@@ -79,6 +80,46 @@
     hclfmt
 
   ];
+
+  extensionsList = with nix-vscode-extensions.extensions.x86_64-linux.vscode-marketplace; [
+    # Golang
+    golang.go
+
+    # Terrafom
+    hashicorp.terraform
+    hashicorp.hcl
+
+    # Python
+    ms-python.python
+
+    # Java
+    redhat.java
+    vscjava.vscode-lombok
+
+    # Nix
+    jnoortheen.nix-ide
+
+    # Generic language parsers / prettifiers
+    esbenp.prettier-vscode
+    redhat.vscode-yaml
+    jkillian.custom-local-formatters
+
+    # Generic tools
+    eamodio.gitlens
+    jebbs.plantuml
+
+    # DB stuff
+    mtxr.sqltools
+    mtxr.sqltools-driver-pg
+
+    # Eye candy
+    pkief.material-icon-theme
+    zhuangtongfa.material-theme
+
+    # Misc
+    jkillian.custom-local-formatters
+  ];
+
 in {
   imports = [
     nix-index-database.hmModules.nix-index
@@ -99,6 +140,7 @@ in {
     ++
     # FIXME: you can add anything else that doesn't fit into the above two lists in here
     [
+      (pkgs.callPackage ../github_binaries/codegpt.nix { })
       (pkgs.callPackage ../github_binaries/ecs.nix { })
     ];
 
@@ -118,5 +160,84 @@ in {
     nix-index-database.comma.enable = true;
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
+    vscode = {
+      enable = true;
+      extensions = extensionsList;
+      enableUpdateCheck = true;
+      enableExtensionUpdateCheck = true;
+
+      keybindings = [
+        {
+          key = "ctrl+q";
+          command = "editor.action.commentLine";
+          when = "editorTextFocus && !editorReadonly";
+        }
+        {
+          key = "ctrl+d";
+          command = "editor.action.copyLinesDownAction";
+          when = "editorTextFocus && !editorReadonly";
+        }
+      ];
+
+      userSettings = {
+        "git.autorefresh" = true;
+        "workbench.colorTheme" = "Visual Studio Dark";
+        "workbench.iconTheme" = "material-icon-theme";
+        "workbench.startupEditor" = "newUntitledFile";
+        "editor.renderWhitespace" = "all";
+        "editor.formatOnSave" = true;
+        "editor.tabSize" = 2;
+        "extensions.ignoreRecommendations" = true;
+        "extensions.autoCheckUpdates" = false;
+        "explorer.confirmDelete" = false;
+        "extensions.autoUpdate" = false;
+        "files.watcherExclude" = {
+          "**/vendor/**" = true;
+          "**/.config/**" = true;
+        };
+        "gitlens.mode.statusBar.enabled" = false;
+        "gitlens.hovers.currentLine.over" = "line";
+        "explorer.confirmDragAndDrop" = false;
+        "redhat.telemetry.enabled" = false;
+        "telemetry.telemetryLevel" = "off";
+        "[terraform]" = {
+          "editor.defaultFormatter" = "hashicorp.terraform";
+        };
+        "[hcl]" = {
+          "editor.defaultFormatter" = "jkillian.custom-local-formatters";
+        };
+        "files.associations" = {
+          "*.hcl" = "hcl";
+          "*.nomad" = "hcl";
+          "*.nomad.hcl" = "hcl";
+          "*.pkr.hcl" = "hcl";
+          "flake.lock" = "json";
+        };
+        "customLocalFormatters.formatters" = [
+          {
+            "command" = "${pkgs.hclfmt}/bin/hclfmt";
+            "languages" = [ "hcl" ];
+          }
+        ];
+        "nix.enableLanguageServer" = true;
+        "nix.serverPath" = "nil";
+        "nix.formatterPath" = "nixpkgs-fmt";
+        "nix.serverSettings" = {
+          "nil" = {
+            "formatting" = { "command" = [ "nixpkgs-fmt" ]; };
+          };
+        };
+        "go.toolsManagement.autoUpdate" = false;
+        "go.coverOnSave" = true;
+        "go.coverageDecorator" = {
+          "type" = "gutter";
+          "coveredHighlightColor" = "rgba(64,128,128,0.5)";
+          "uncoveredHighlightColor" = "rgba(128,64,64,0.25)";
+          "coveredGutterStyle" = "blockgreen";
+          "uncoveredGutterStyle" = "blockred";
+        };
+        "go.coverOnSingleTest" = true;
+      };
+    };
   };
 }
