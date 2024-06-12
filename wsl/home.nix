@@ -1,11 +1,11 @@
-{
-  config,
-  pkgs,
-  username,
-  nix-index-database,
-  nix-vscode-extensions,
-  ...
-}: let
+{ config
+, pkgs
+, username
+, nix-index-database
+, nix-vscode-extensions
+, ...
+}:
+let
   stable-packages = with pkgs; [
     # key tools
     bat
@@ -44,7 +44,8 @@
     nil
     meld
     fastfetch
-    
+    postgresql
+
     # core languages
     go
     python3
@@ -120,7 +121,8 @@
     jkillian.custom-local-formatters
   ];
 
-in {
+in
+{
   imports = [
     nix-index-database.hmModules.nix-index
   ];
