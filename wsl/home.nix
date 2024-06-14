@@ -202,6 +202,7 @@ in
         "explorer.confirmDragAndDrop" = false;
         "redhat.telemetry.enabled" = false;
         "telemetry.telemetryLevel" = "off";
+        "terminal.integrated.scrollback" = 10000;
         "[terraform]" = {
           "editor.defaultFormatter" = "hashicorp.terraform";
         };
