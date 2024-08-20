@@ -2,17 +2,17 @@
 
 buildGoModule rec {
   pname = "ecs-cli";
-  version = "0.5.2";
+  version = "0.5.4";
   doCheck = false;
   vendorHash = "sha256-3UCDMlSJf7h07gov8xOlwl8mL3slTgFEGjfjELpQOrE=";
-  # vendorHash = lib.fakeHash; # do this first, then paste output into above `vendorHash`, and comment this
+  #vendorHash = lib.fakeHash; # do this first, then paste output into above `vendorHash`, and comment this
 
   src = fetchFromGitHub {
     owner = "justmiles";
     repo = pname;
     rev = "refs/tags/v${version}";
-    hash = "sha256-9X+mf5UMGB75wn06vlEfFbleCmhhstDbslzrKiK11qk=";
-    # sha256 = lib.fakeSha256; # do this first, then paste output into above `hash`, and comment this
+    hash = "sha256-JsCGox2JdYzYmlujHrhnMQsXfM0Yzvix9/VG/UoIUd0=";
+    #sha256 = lib.fakeSha256; # do this first, then paste output into above `hash`, and comment this
   };
 
   ldflags = [

@@ -45,6 +45,7 @@ let
     meld
     fastfetch
     postgresql
+    w3m
 
     # core languages
     go
