@@ -109,7 +109,7 @@ let
     jkillian.custom-local-formatters
 
     # Generic tools
-    eamodio.gitlens
+    # eamodio.gitlens broken in marketplace 
     jebbs.plantuml
 
     # DB stuff
