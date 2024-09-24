@@ -7,7 +7,7 @@ in
 stdenv.mkDerivation rec {
 
   pname = "code-server";
-  version = "4.90.0";
+  version = "4.92.2";
   nativeBuildInputs = [ makeWrapper nodejs ];
   propagatedBuildInputs = [ nodejs ];
   propagatedNativeBuildInputs = [ ];
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   src = (
     fetchurl {
       url = "https://github.com/coder/code-server/releases/download/v${version}/code-server-${version}-linux-amd64.tar.gz";
-      sha256 = "sha256-zb4L9qgEB9Qfq0HT0MyYGG7597yg91AEGbXtklnb8z8=";
+      sha256 = "sha256-w4X1Cv0DRvcn/jryorr5TDhXM4/ky/TMmTOqqMaQ5Xs=";
       # if this fails, use the "got" output from error message"
     }
   );

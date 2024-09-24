@@ -46,6 +46,8 @@ let
     fastfetch
     postgresql
     w3m
+    dig
+    docker-compose
 
     # core languages
     go
